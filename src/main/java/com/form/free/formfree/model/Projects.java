@@ -14,6 +14,11 @@ public class Projects {
     @Column(unique = true)
     private String apikey;
 
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+
+
 
     public String getProjectName() {
         return projectName;

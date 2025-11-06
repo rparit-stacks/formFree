@@ -19,7 +19,6 @@ public class FormController {
     @Autowired
     private FormService formService;
 
-
     @PostMapping("/create-project")
     public ResponseEntity<Map<String, String>> createProject(@RequestParam String projectName) {
         Map<String, String> projectDetails = formService.createProject(projectName);
@@ -33,14 +32,17 @@ public class FormController {
             String result = formService.submitForm(apiKey, formField);
             return new ResponseEntity<>(result, HttpStatus.ACCEPTED);
         } catch (Exception e) {
-            // Error handlng
             return new ResponseEntity<>("Server Error: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
     @GetMapping("/form/result/{projectId}")
     public List<FromSubmission> getSubmissionFromProjectId(@PathVariable Long projectId) {
-        // Fetches all submissions for a project
         return formService.getSubmissionFromProjectId(projectId);
+    }
+
+    @GetMapping("/form/submit/{apiKey}")
+    public ResponseEntity<String> getEndpointResponse(@PathVariable String apiKey) {
+        return new ResponseEntity<>("This is a POST endpoint. Please use POST method to submit the form.", HttpStatus.OK);
     }
 }
